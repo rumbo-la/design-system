@@ -1,0 +1,126 @@
+/* ============================================================
+   Rumbo Design System · tokens
+   GENERADO por scripts/build-tokens.mjs — no editar a mano.
+   Fuente de verdad: tokens/tokens.json
+   ============================================================ */
+
+:root, [data-theme="dark"] {
+  /* Brand primitives */
+  --rb-blue: #382EDC; /* Rumbo blue · señal principal */
+  --rb-blue-700: #2A22A8;
+  --rb-blue-300: #8078F0;
+  --rb-cyan: #47EBEB; /* Beacon cyan · highlight */
+  --rb-cyan-600: #19B8B8;
+  --rb-purple: #8452FD; /* Journey purple · depth (RGB 132·82·253) */
+  --rb-ink: #0A0A0B; /* Anchor · canónico (acta #1) */
+  --rb-paper: #F4F2ED; /* Respiro cálido · canónico (acta #2) */
+  --rb-white: #FFFFFF;
+
+  /* Functional */
+  --rb-orange: #FF5A36; /* Solo estados de error — NO es color de marca (acta #4) */
+  --success: #3CCB7F;
+  --warning: #FFB020;
+  --danger: #FF5A36;
+
+  /* Semantic — dark (tema primario) */
+  --bg: #0A0A0B;
+  --bg-elev: #121214;
+  --bg-subtle: #17171A;
+  --surface: #1B1B1F;
+  --surface-2: #242428;
+  --border: rgba(255,255,255,.08);
+  --border-strong: rgba(255,255,255,.16);
+  --text: #FAFAFA;
+  --text-muted: rgba(255,255,255,.64);
+  --text-dim: rgba(255,255,255,.44);
+  --accent: #382EDC;
+  --accent-fg: #FFFFFF;
+  --accent-soft: rgba(56,46,220,.14);
+  --highlight: #47EBEB;
+
+  /* Radii */
+  --radius-0: 0px; /* Campos técnicos, tags */
+  --radius-1: 4px; /* Botones sm, inputs técnicos */
+  --radius-2: 8px; /* Default — inputs, botones */
+  --radius-3: 12px; /* Cards, modales, stages */
+  --radius-4: 16px; /* Hero, secciones grandes */
+  --radius-full: 9999px; /* Pills, avatars */
+
+  /* Shadow — dark */
+  --shadow-1: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-2: 0 4px 12px rgba(0,0,0,.5);
+  --shadow-3: 0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
+  --shadow-glow: 0 0 0 1px rgba(56,46,220,.5), 0 8px 24px rgba(56,46,220,.35);
+
+  /* Spacing — base 4px */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Type — familias */
+  --ff-display: "Dx Grafik", "Space Grotesk", sans-serif;
+  --ff-sans: "Space Grotesk", system-ui, sans-serif;
+  --ff-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Type — escala producto */
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-base: 14px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --fs-2xl: 28px;
+  --fs-3xl: 36px;
+  --fs-4xl: 48px;
+  --fs-5xl: 64px;
+  --fs-6xl: 88px;
+
+  /* Type — escala marketing (cap. 06 del manual) */
+  --mk-display-size: 96px;
+  --mk-display-lh: 88px;
+  --mk-h1-size: 56px;
+  --mk-h1-lh: 56px;
+  --mk-h2-size: 36px;
+  --mk-h2-lh: 40px;
+  --mk-body-l-size: 20px;
+  --mk-body-l-lh: 30px;
+  --mk-body-size: 16px;
+  --mk-body-lh: 24px;
+  --mk-caption-size: 11px;
+  --mk-caption-lh: 16px;
+
+  /* Motion */
+  --dur-1: 120ms; /* Micro — hover, focus */
+  --dur-2: 200ms; /* Default — fades, color */
+  --dur-3: 320ms; /* Transforms, entradas */
+  --dur-4: 500ms; /* Modales, page change */
+  --ease-out: cubic-bezier(.2,.7,.2,1); /* Default easing */
+  --ease-spring: cubic-bezier(.18,.89,.32,1.28); /* Entradas juguetonas */
+}
+
+/* Tema light — redefine solo tokens semánticos (RF-03) */
+[data-theme="light"] {
+  --bg: #F4F2ED;
+  --bg-elev: #FBFAF7;
+  --bg-subtle: #EFEDE7;
+  --surface: #FFFFFF;
+  --surface-2: #F4F2ED;
+  --border: rgba(10,10,11,.08);
+  --border-strong: rgba(10,10,11,.18);
+  --text: #0A0A0B;
+  --text-muted: rgba(10,10,11,.64);
+  --text-dim: rgba(10,10,11,.44);
+  --accent-soft: rgba(56,46,220,.10);
+  --shadow-1: 0 1px 2px rgba(10,10,11,.08);
+  --shadow-2: 0 4px 12px rgba(10,10,11,.10);
+  --shadow-3: 0 12px 32px rgba(10,10,11,.14), 0 2px 6px rgba(10,10,11,.06);
+}

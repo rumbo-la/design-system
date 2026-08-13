@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rumbo UI · Kitchen sink</title>
+
+<!-- Prueba de RF-08: esta página NO define estilos de componente.
+     Todo viene de dist/. Solo hay layout de página (grid y separadores). -->
+<link rel="stylesheet" href="../dist/fonts.css" />
+<link rel="stylesheet" href="../dist/rumbo.css" />
+<link rel="stylesheet" href="../dist/rumbo-ui.css" />
+<style>
+  /* Solo layout de la página de prueba — ningún estilo de componente */
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ff-sans);font-size:var(--fs-base);line-height:1.55}
+  .page{max-width:1000px;margin:0 auto;padding:48px 28px 120px}
+  h1{font-family:var(--ff-display);font-weight:900;font-style:italic;font-size:var(--fs-4xl);letter-spacing:-.03em;margin:0 0 8px}
+  h2{font-family:var(--ff-display);font-weight:900;font-style:italic;font-size:var(--fs-2xl);letter-spacing:-.02em;margin:0 0 16px;text-transform:lowercase}
+  .lead{color:var(--text-muted);max-width:65ch;margin:0 0 8px}
+  section{margin-top:var(--sp-12);padding-top:var(--sp-8);border-top:1px solid var(--border)}
+  .row{display:flex;flex-wrap:wrap;gap:var(--sp-4);align-items:center;margin-bottom:var(--sp-4)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-4)}
+  .icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:var(--sp-3)}
+  .icon-cell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-2);padding:var(--sp-4);text-align:center;color:var(--text-muted)}
+  .icon-cell svg{width:32px;height:32px;color:var(--accent)}
+  .icon-cell code{display:block;font-family:var(--ff-mono);font-size:10px;margin-top:6px;color:var(--text-dim);word-break:break-all}
+  .topbar{display:flex;gap:var(--sp-3);align-items:center;justify-content:space-between;margin-bottom:var(--sp-8)}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="topbar">
+    <div>
+      <h1>kitchen sink<span style="color:var(--accent)">.</span></h1>
+      <p class="lead">Todos los componentes renderizados <strong>solo</strong> con <code>dist/rumbo.css</code> + <code>dist/rumbo-ui.css</code> + <code>dist/rumbo-ui.js</code>. Si algo se ve bien aquí, la librería es autosuficiente (RF-08).</p>
+    </div>
+    <div class="segmented" role="group" aria-label="Tema">
+      <button aria-pressed="true" onclick="setTheme('dark',this)">Dark</button>
+      <button aria-pressed="false" onclick="setTheme('light',this)">Light</button>
+    </div>
+  </div>
+
+  <section style="border:0;margin-top:0;padding-top:0">
+    <h2>botones</h2>
+    <div class="row">
+      <button class="btn">Primario</button>
+      <button class="btn secondary">Secundario</button>
+      <button class="btn ghost">Ghost</button>
+      <button class="btn outline">Outline</button>
+      <button class="btn cyan">Cyan</button>
+      <button class="btn danger">Danger</button>
+      <button class="btn" disabled>Disabled</button>
+      <button class="btn"><span class="spin"></span> Cargando…</button>
+    </div>
+    <div class="row">
+      <button class="btn sm">Small</button>
+      <button class="btn">Default</button>
+      <button class="btn lg">Large</button>
+      <button class="btn xl">Extra large</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>formularios</h2>
+    <div class="grid">
+      <div class="field"><label for="k-nombre">Nombre</label><input id="k-nombre" class="input" placeholder="Ana Rumbo" /></div>
+      <div class="field"><label for="k-mail">Email</label><input id="k-mail" class="input" type="email" value="ana@rumbo.la" /><span class="hint">Para notificaciones</span></div>
+      <div class="field invalid"><label for="k-err">Con error</label><input id="k-err" class="input" value="correo-invalido" aria-invalid="true" /><span class="err">Formato de email inválido</span></div>
+      <div class="field"><label for="k-sel">Tipo de proyecto</label>
+        <select id="k-sel" class="input select"><option>Brand identity</option><option>Website</option><option>Producto digital</option></select>
+      </div>
+      <div class="field"><label for="k-url">URL</label>
+        <div class="input-group"><span class="addon">rumbo.la/</span><input id="k-url" class="input" placeholder="mi-proyecto" /></div>
+      </div>
+      <div class="field"><label for="k-txt">Mensaje</label><textarea id="k-txt" class="input" rows="3" placeholder="Cuéntanos…"></textarea></div>
+    </div>
+    <div class="row" style="margin-top:var(--sp-4)">
+      <label class="check"><input type="checkbox" checked><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span>Acepto términos</span></label>
+      <label class="check radio"><input type="radio" name="k-plan" checked><span class="box"></span><span>Mensual</span></label>
+      <label class="check radio"><input type="radio" name="k-plan"><span class="box"></span><span>Anual</span></label>
+      <label class="switch"><input type="checkbox" checked><span class="track"></span><span>Notificaciones</span></label>
+    </div>
+  </section>
+
+  <section>
+    <h2>badges y estado</h2>
+    <div class="row">
+      <span class="badge">Default</span>
+      <span class="badge accent">Accent</span>
+      <span class="badge cyan">Highlight</span>
+      <span class="badge dot success">Activo</span>
+      <span class="badge dot warn">Pendiente</span>
+      <span class="badge dot danger">Error</span>
+    </div>
+    <div class="row">
+      <div class="progress"><span style="width:62%"></span></div>
+      <div class="ring"></div>
+      <div class="skeleton" style="width:180px"></div>
+      <span class="avatar sm">AR</span><span class="avatar">JM</span><span class="avatar lg">LC</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>alertas</h2>
+    <div style="display:flex;flex-direction:column;gap:var(--sp-3);max-width:520px">
+      <div class="alert"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div><div class="body"><strong>Info</strong><span>Tu plan se renueva el 15 de mayo.</span></div></div>
+      <div class="alert success"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="body"><strong>Completado</strong><span>Los archivos se subieron correctamente.</span></div></div>
+      <div class="alert danger"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20Z"/><path d="M12 10v5M12 18v.5"/></svg></div><div class="body"><strong>Error al guardar</strong><span>Verifica tu conexión e inténtalo de nuevo.</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>componentes con comportamiento</h2>
+    <p class="lead">Todos operables por teclado: Tab, flechas, Esc. Prueba sin tocar el ratón.</p>
+    <div class="row">
+      <button class="btn" data-rb-open="#demo-modal">Abrir modal</button>
+      <button class="btn secondary" data-rb-drawer="#demo-drawer">Abrir drawer</button>
+
+      <span class="rb-menu-wrap">
+        <button class="btn outline" data-rb-menu="#demo-menu">Acciones ▾</button>
+        <div class="rb-menu" id="demo-menu">
+          <div class="rb-menu-label">Proyecto</div>
+          <button>Editar</button>
+          <button>Duplicar</button>
+          <button aria-disabled="true">Archivar</button>
+          <hr />
+          <button class="danger">Eliminar</button>
+        </div>
+      </span>
+
+      <span class="rb-menu-wrap">
+        <button class="btn ghost" data-rb-popover="#demo-pop">¿Qué es esto?</button>
+        <div class="rb-popover" id="demo-pop">
+          <h6>Sobre el presupuesto</h6>
+          <p>Es un rango estimado. Lo ajustamos juntos en la reunión de entendimiento.</p>
+        </div>
+      </span>
+
+      <button class="btn secondary" data-rb-tip="Copiar al portapapeles · ⌘C">Con tooltip</button>
+      <button class="btn cyan" onclick="RumboUI.toast('Sesión guardada')">Toast éxito</button>
+      <button class="btn danger" onclick="RumboUI.toast('No se pudo guardar','danger')">Toast error</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>tabla</h2>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>Cliente</th><th>Proyecto</th><th>Estado</th><th>Presupuesto</th></tr></thead>
+        <tbody>
+          <tr><td><div class="user"><span class="avatar sm">AR</span> Ana Ruiz</div></td><td>Rebranding Norte</td><td><span class="badge dot success">Activo</span></td><td>$12,400</td></tr>
+          <tr><td><div class="user"><span class="avatar sm">JM</span> J. Mendoza</div></td><td>Website Verso</td><td><span class="badge dot warn">En revisión</span></td><td>$8,200</td></tr>
+          <tr><td><div class="user"><span class="avatar sm">LC</span> Lu Castro</div></td><td>App Ruta</td><td><span class="badge dot accent">Scoping</span></td><td>$24,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>íconos</h2>
+    <p class="lead">26 íconos generados por <code>scripts/build-icons.mjs</code>, referenciados desde el sprite y heredando <code>currentColor</code>.</p>
+    <div class="icon-grid" id="icon-grid"></div>
+  </section>
+</div>
+
+<!-- Modal (RF-09) -->
+<div class="rb-modal" id="demo-modal" aria-labelledby="demo-modal-title">
+  <div class="rb-modal-scrim"></div>
+  <div class="rb-modal-panel">
+    <div class="mhead">
+      <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20Z"/><path d="M12 10v5M12 18v.5"/></svg></div>
+      <div>
+        <h5 id="demo-modal-title">Eliminar proyecto</h5>
+        <p>Esta acción no se puede deshacer. Se eliminarán los archivos, comentarios y versiones de <strong style="color:var(--text)">Norte · Brand</strong>.</p>
+      </div>
+    </div>
+    <div class="field" style="max-width:none"><label for="m-confirm">Escribe <code>NORTE</code> para confirmar</label><input id="m-confirm" class="input" /></div>
+    <div class="mactions">
+      <button class="btn ghost" data-rb-close>Cancelar</button>
+      <button class="btn danger" data-rb-close onclick="RumboUI.toast('Proyecto eliminado','danger')">Eliminar proyecto</button>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer (RF-12) -->
+<div class="rb-drawer" id="demo-drawer" aria-labelledby="demo-drawer-title">
+  <div class="rb-drawer-scrim"></div>
+  <div class="rb-drawer-panel">
+    <div class="rb-drawer-head">
+      <h5 id="demo-drawer-title">Filtros</h5>
+      <button class="btn ghost icon" data-rb-close aria-label="Cerrar panel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="field" style="max-width:none;margin-bottom:var(--sp-4)"><label for="d-est">Estado</label>
+      <select id="d-est" class="input select"><option>Todos</option><option>Activo</option><option>Pausado</option></select>
+    </div>
+    <label class="check" style="margin-bottom:var(--sp-3)"><input type="checkbox" checked><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span>Solo mis proyectos</span></label>
+    <button class="btn" style="width:100%" data-rb-close>Aplicar filtros</button>
+  </div>
+</div>
+
+<script src="../dist/rumbo-ui.js"></script>
+<script>
+  function setTheme(t, btn){
+    document.documentElement.dataset.theme = t;
+    btn.parentElement.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+  }
+
+  // Galería de íconos desde el índice generado
+  fetch('../dist/icons/index.json')
+    .then(r => r.json())
+    .then(async (icons) => {
+      const sprite = await fetch('../dist/icons/sprite.svg').then(r => r.text());
+      document.body.insertAdjacentHTML('afterbegin', sprite);
+      document.getElementById('icon-grid').innerHTML = icons.map(i =>
+        `<div class="icon-cell"><svg viewBox="${i.viewBox}"><use href="#rb-icon-${i.name}"/></svg><code>${i.name}</code></div>`
+      ).join('');
+    })
+    .catch(() => {
+      document.getElementById('icon-grid').innerHTML =
+        '<p class="lead">Sirve la carpeta por HTTP para ver los íconos (<code>npm run dev</code>).</p>';
+    });
+</script>
+</body>
+</html>

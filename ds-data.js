@@ -5,81 +5,72 @@
 
 window.RB = window.RB || {};
 
+/* ---------- Datos derivados de tokens/tokens.json (RF-13) ----------
+   dist/tokens.js define window.RB_TOKENS y se carga antes que este archivo.
+   Ningún valor se escribe a mano aquí: cambiar un token en tokens.json y
+   correr `npm run build:tokens` actualiza la documentación. */
+const T = window.RB_TOKENS || {};
+const SEMANTIC_ROLES = _roles();
+
 RB.colors = {
-  brand: [
-    { n: "Rumbo blue",   t: "--rb-blue",     v: "#382EDC" },
-    { n: "Blue 700",     t: "--rb-blue-700", v: "#2A22A8" },
-    { n: "Blue 300",     t: "--rb-blue-300", v: "#8078F0" },
-    { n: "Rumbo cyan",   t: "--rb-cyan",     v: "#47EBEB" },
-    { n: "Cyan 600",     t: "--rb-cyan-600", v: "#19B8B8" },
-    { n: "Purple",       t: "--rb-purple",   v: "#8452FD" },
-    { n: "Orange",       t: "--rb-orange",   v: "#FF5A36" },
-    { n: "Ink",          t: "--rb-ink",      v: "#0A0A0B" },
-    { n: "Paper",        t: "--rb-paper",    v: "#F4F2ED" },
-  ],
-  semantic: [
-    { n: "bg",           t: "--bg",          v: "#0A0A0B", role: "Base canvas" },
-    { n: "bg / elevated", t: "--bg-elev",    v: "#121214", role: "Topbar, sidebar" },
-    { n: "bg / subtle",  t: "--bg-subtle",   v: "#17171A", role: "Table headers" },
-    { n: "surface",      t: "--surface",     v: "#1B1B1F", role: "Cards, inputs" },
-    { n: "surface 2",    t: "--surface-2",   v: "#242428", role: "Hover, pressed" },
-    { n: "border",       t: "--border",      v: "rgba(255,255,255,.08)", role: "Default rules" },
-    { n: "border strong",t: "--border-strong", v: "rgba(255,255,255,.16)", role: "Focus, form" },
-    { n: "text",         t: "--text",        v: "#FAFAFA", role: "Body & headings" },
-    { n: "text muted",   t: "--text-muted",  v: "rgba(255,255,255,.64)", role: "Captions, body dim" },
-    { n: "text dim",     t: "--text-dim",    v: "rgba(255,255,255,.44)", role: "Meta, labels" },
-  ],
-  status: [
-    { n: "Success",      t: "--success",     v: "#3CCB7F" },
-    { n: "Warning",      t: "--warning",     v: "#FFB020" },
-    { n: "Danger",       t: "--danger",      v: "#FF5A36" },
-    { n: "Accent",       t: "--accent",      v: "#382EDC" },
-    { n: "Highlight",    t: "--highlight",   v: "#47EBEB" },
-  ],
+  brand:    (T.brand || []).map(c => ({ n: c.role ? c.role.split(" · ")[0] : c.n, t: c.t, v: c.v })),
+  semantic: (T.semantic || []).map(c => ({ n: c.n, t: c.t, v: c.v, role: SEMANTIC_ROLES[c.n] })),
+  status:   (T.functional || []).map(c => ({ n: c.n, t: c.t, v: c.v })),
 };
 
-RB.spacing = [
-  ["--sp-1", 4], ["--sp-2", 8], ["--sp-3", 12], ["--sp-4", 16],
-  ["--sp-5", 20], ["--sp-6", 24], ["--sp-8", 32], ["--sp-10", 40],
-  ["--sp-12", 48], ["--sp-16", 64], ["--sp-20", 80], ["--sp-24", 96],
-];
+/* Rol de uso de cada token semántico — descripción editorial, no valor */
+function _roles() {
+  return {
+    "bg": "Base canvas",
+    "bg-elev": "Topbar, sidebar",
+    "bg-subtle": "Table headers",
+    "surface": "Cards, inputs",
+    "surface-2": "Hover, pressed",
+    "border": "Default rules",
+    "border-strong": "Focus, form",
+    "text": "Body & headings",
+    "text-muted": "Captions, body dim",
+    "text-dim": "Meta, labels",
+    "accent": "Acción primaria",
+    "accent-fg": "Texto sobre accent",
+    "accent-soft": "Fondo de acento",
+    "highlight": "Detalle · un acento por pieza",
+  };
+}
 
-RB.radii = [
-  ["--radius-0", 0, "Campos técnicos, tags"],
-  ["--radius-1", 4, "Botones sm, inputs técnicos"],
-  ["--radius-2", 8, "Default — inputs, botones"],
-  ["--radius-3", 12, "Cards, modales, stages"],
-  ["--radius-4", 16, "Hero, secciones grandes"],
-  ["--radius-full", 9999, "Pills, avatars"],
-];
+RB.spacing = T.spacing || [];
+RB.radii   = T.radii   || [];
+RB.shadows = T.shadows || [];
+RB.motion  = T.motion  || [];
 
-RB.shadows = [
-  ["--shadow-1", "0 1px 2px rgba(0,0,0,.4)", "Edge lift (inputs hover)"],
-  ["--shadow-2", "0 4px 12px rgba(0,0,0,.5)", "Dropdowns, popovers"],
-  ["--shadow-3", "0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4)", "Modales, toasts"],
-  ["--shadow-glow", "0 0 0 1px rgba(56,46,220,.5), 0 8px 24px rgba(56,46,220,.35)", "Accent lift (featured)"],
-];
+/* Escala tipográfica: la muestra editorial vive aquí, los tamaños en tokens.json */
+const _samples = {
+  display: "Encontramos el rumbo.",
+  h1: "tiempo, espacio, tribu",
+  h2: "mood + context + attention",
+  "body-l": "Rumbo conecta empresas con talento digital validado.",
+  body: "Construimos y ampliamos equipos con velocidad.",
+  caption: "Brand Manual · v1.0 · 2026",
+};
 
 RB.type = [
-  { nm: "Display",  ff: "Dx Grafik", fw: "900 italic", sz: 88, tk: "-.03em", lh: .95, sample: "Encontramos el rumbo." },
-  { nm: "H1",       ff: "Dx Grafik", fw: "900 italic", sz: 56, tk: "-.025em", lh: 1,   sample: "tiempo, espacio, tribu" },
-  { nm: "H2",       ff: "Dx Grafik", fw: "900 italic", sz: 36, tk: "-.02em",  lh: 1,   sample: "mood + context + attention" },
-  { nm: "H3",       ff: "Space Grotesk", fw: "600", sz: 22, tk: "-.015em", lh: 1.2, sample: "Secciones y títulos medios" },
-  { nm: "H4",       ff: "Space Grotesk", fw: "600", sz: 18, tk: "-.01em",  lh: 1.3, sample: "Subtítulos de bloque" },
-  { nm: "Body",     ff: "Space Grotesk", fw: "400", sz: 16, tk: "0",       lh: 1.55, sample: "Los ríos no avanzan en línea recta: serpentean, eligen su cauce, encuentran el mar." },
-  { nm: "Body sm",  ff: "Space Grotesk", fw: "400", sz: 14, tk: "0",       lh: 1.55, sample: "Texto por defecto del sistema; densidad estándar en UI de producto." },
-  { nm: "Caption",  ff: "Space Grotesk", fw: "500", sz: 12, tk: ".005em",  lh: 1.4, sample: "Captions, labels en formularios, metadatos" },
-  { nm: "Mono",     ff: "ui-monospace", fw: "500", sz: 11, tk: ".18em",   lh: 1.4, sample: "01 · CÓDIGO · TOKEN · META · ETIQUETA", mono: true, upper: true },
+  ...(T.scaleMarketing || []).map(([k, size, lh]) => ({
+    nm: k === "body-l" ? "Body L" : k[0].toUpperCase() + k.slice(1),
+    ff: ["display", "h1", "h2"].includes(k) ? "Dx Grafik" : "Space Grotesk",
+    fw: ["display", "h1", "h2"].includes(k) ? "900 italic" : (k === "caption" ? "500" : "400"),
+    sz: parseInt(size, 10),
+    lh: +(parseInt(lh, 10) / parseInt(size, 10)).toFixed(2),
+    tk: ["display", "h1", "h2"].includes(k) ? "-.025em" : "0",
+    sample: _samples[k] || "Aa Bb Cc",
+    ctx: "marketing",
+  })),
+  { nm: "UI base", ff: "Space Grotesk", fw: "400", sz: 14, tk: "0", lh: 1.55,
+    sample: "Texto por defecto del sistema; densidad estándar en UI de producto.", ctx: "producto" },
+  { nm: "Mono", ff: "ui-monospace", fw: "500", sz: 11, tk: ".18em", lh: 1.4,
+    sample: "01 · CÓDIGO · TOKEN · META · ETIQUETA", mono: true, upper: true, ctx: "producto" },
 ];
 
-RB.motion = [
-  ["--dur-1", "120ms", "Micro — hover, focus"],
-  ["--dur-2", "200ms", "Default — fades, color"],
-  ["--dur-3", "320ms", "Transforms, entradas"],
-  ["--dur-4", "500ms", "Modales, page change"],
-  ["--ease-out", "cubic-bezier(.2,.7,.2,1)", "Default easing"],
-  ["--ease-spring", "cubic-bezier(.18,.89,.32,1.28)", "Entradas juguetonas"],
-];
+RB.brandRules = T.brandRules || {};
 
 /* Routing map — page label + optional section title/number */
 RB.routes = [
@@ -112,6 +103,8 @@ RB.routes = [
   { r: "progress",     t: "Progress & Loader",g: "Components",  n: "02.13" },
   { r: "tooltip",      t: "Tooltip",          g: "Components",  n: "02.14" },
   { r: "empty",        t: "Empty state",      g: "Components",  n: "02.15" },
+  { r: "menu",         t: "Menu & Popover",   g: "Components",  n: "02.16" },
+  { r: "drawer",       t: "Drawer",           g: "Components",  n: "02.17" },
 
   { r: "hero",         t: "Hero sections",    g: "Patterns",    n: "03.00" },
   { r: "pricing",      t: "Pricing",          g: "Patterns",    n: "03.01" },
@@ -121,6 +114,16 @@ RB.routes = [
   { r: "screen-dashboard", t: "Dashboard",    g: "Screens",     n: "04.01" },
   { r: "screen-pricing", t: "Pricing page",   g: "Screens",     n: "04.02" },
 ];
+
+/* Estadísticas derivadas — nada de números a mano (RF-13) */
+RB.stats = {
+  get tokens(){ 
+    const t = window.RB_TOKENS || {};
+    return (t.brand||[]).length + (t.functional||[]).length + (t.semantic||[]).length
+         + (t.spacing||[]).length + (t.radii||[]).length + (t.shadows||[]).length + (t.motion||[]).length;
+  },
+  get components(){ return RB.routes.filter(r => r.g === "Components").length; },
+};
 
 /* Utility: simple HTML escaper for code reveal panels */
 RB.esc = s => String(s).replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));

@@ -19,6 +19,15 @@
     });
     const fn = pages[def.r] || pages.home;
     wrap.innerHTML = fn ? fn(def) : `<section class="page is-visible"><h1 class="display">${def.t}</h1><p class="lead">Coming soon.</p></section>`;
+    // Hooks por página (galería de íconos generada)
+    if (def.r === "iconography" && RB.mountIconGallery) RB.mountIconGallery();
+    if (def.r === "home") {
+      fetch("dist/icons/index.json").then(r => r.json())
+        .then(list => { const el = document.getElementById("stat-icons"); if (el) el.textContent = list.length; })
+        .catch(() => {});
+    }
+    // Re-inicializa componentes con comportamiento en el contenido inyectado
+    if (window.RumboUI) RumboUI.init(wrap);
     // Scroll top
     window.scrollTo({ top: 0, behavior: "instant" });
     if (sb.classList.contains("is-open")) sb.classList.remove("is-open");

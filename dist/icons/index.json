@@ -1,0 +1,132 @@
+[
+  {
+    "name": "staff-augmentation",
+    "label": "Staff Augmentation",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "on-demand-experts",
+    "label": "On-demand experts",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "talento-individual",
+    "label": "Talento individual",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "equipo-a-medida",
+    "label": "Equipo a medida",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "analytics",
+    "label": "Analytics",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "target",
+    "label": "Target",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "despliegue-del-equipo",
+    "label": "Despliegue del equipo",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "digital-talent-search",
+    "label": "Digital Talent Search",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "conoce-a-tus-candidatos",
+    "label": "Conoce a tus candidatos",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "propuesta-personalizada",
+    "label": "Propuesta personalizada",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "seguimiento-y-feedback",
+    "label": "Seguimiento y feedback",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "data-y-ai",
+    "label": "Data & AI",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "growth-y-martech",
+    "label": "Growth & MarTech",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "agile-delivery-y-ops",
+    "label": "Agile Delivery & Ops",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "practitioner-led",
+    "label": "Practitioner-Led",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "reunion-de-entendimiento",
+    "label": "Reunion de entendimiento",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "budget",
+    "label": "Budget",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "shuffle",
+    "label": "Shuffle",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "clock",
+    "label": "Clock",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "community-driven",
+    "label": "Community-Driven",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "product",
+    "label": "Product",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "design",
+    "label": "Design",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "engineering-y-architecture",
+    "label": "Engineering & Architecture",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "brote",
+    "label": "Brote",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "calendar",
+    "label": "Calendar",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "name": "digital-consulting",
+    "label": "Digital Consulting",
+    "viewBox": "0 0 24 24"
+  }
+]

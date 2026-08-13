@@ -491,7 +491,42 @@ RB.pages.modal = (route) => `
   <section class="page is-visible">
     ${RB.sectionHeader(route, "Modales para decisiones puntuales. Máximo 420px, siempre con una acción primaria clara. Nunca uses modal para formularios largos — usa una página.")}
 
-    <h3 class="sub">Confirmación</h3>
+    <h3 class="sub">Modal funcional</h3>
+    <p>Implementación real (RF-09): foco atrapado, cierre con Esc o click en el scrim, y el foco vuelve al disparador. Pruébalo sin usar el ratón.</p>
+    ${RB.demo({
+      stage: `<button class="btn" data-rb-open="#ds-modal-live">Abrir modal</button>
+              <button class="btn secondary" onclick="RumboUI.openModal('#ds-modal-live')">Abrir por API</button>`,
+      code: `<span class="tk-k">&lt;button</span> <span class="tk-a">data-rb-open</span>=<span class="tk-s">"#dlg"</span><span class="tk-k">&gt;</span>Abrir<span class="tk-k">&lt;/button&gt;</span>
+
+<span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-modal"</span> <span class="tk-a">id</span>=<span class="tk-s">"dlg"</span> <span class="tk-a">aria-labelledby</span>=<span class="tk-s">"dlg-t"</span><span class="tk-k">&gt;</span>
+  <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-modal-scrim"</span><span class="tk-k">&gt;&lt;/div&gt;</span>
+  <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-modal-panel"</span><span class="tk-k">&gt;</span>
+    <span class="tk-k">&lt;h5</span> <span class="tk-a">id</span>=<span class="tk-s">"dlg-t"</span><span class="tk-k">&gt;</span>Eliminar proyecto<span class="tk-k">&lt;/h5&gt;</span>
+    <span class="tk-k">&lt;button</span> <span class="tk-a">data-rb-close</span><span class="tk-k">&gt;</span>Cancelar<span class="tk-k">&lt;/button&gt;</span>
+  <span class="tk-k">&lt;/div&gt;</span>
+<span class="tk-k">&lt;/div&gt;</span>
+
+<span class="tk-c">// API: RumboUI.openModal('#dlg') · RumboUI.closeModal('#dlg')</span>`,
+    })}
+
+    <div class="rb-modal" id="ds-modal-live" aria-labelledby="ds-modal-live-t">
+      <div class="rb-modal-scrim"></div>
+      <div class="rb-modal-panel">
+        <div class="mhead">
+          <div class="ic">${RB.ic("alert", 18)}</div>
+          <div>
+            <h5 id="ds-modal-live-t">Eliminar proyecto</h5>
+            <p>Esta acción no se puede deshacer. Se eliminarán todos los archivos y versiones de <strong style="color:var(--text)">Norte · Brand</strong>.</p>
+          </div>
+        </div>
+        <div class="mactions">
+          <button class="btn ghost" data-rb-close>Cancelar</button>
+          <button class="btn danger" data-rb-close onclick="RumboUI.toast('Proyecto eliminado','danger')">Eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Confirmación (estático)</h3>
     ${RB.demo({
       stage: `
         <div class="modal-preview">
@@ -831,5 +866,125 @@ RB.pages.empty = (route) => `
   <span class="tk-k">&lt;button</span> <span class="tk-a">class</span>=<span class="tk-s">"btn"</span><span class="tk-k">&gt;</span>Nuevo proyecto<span class="tk-k">&lt;/button&gt;</span>
 <span class="tk-k">&lt;/div&gt;</span>`,
     })}
+  </section>
+`;
+
+/* ============ MENU & POPOVER (RF-11) ============ */
+RB.pages.menu = (route) => `
+  <section class="page is-visible">
+    ${RB.sectionHeader(route, "Menú desplegable y popover. Ambos siguen el patrón de teclado de WAI-ARIA: se abren con Enter/Space/↓, se navegan con flechas y Home/End, se cierran con Esc devolviendo el foco al disparador. El comportamiento lo aporta <code>dist/rumbo-ui.js</code>.")}
+
+    <h3 class="sub">Menu</h3>
+    ${RB.demo({
+      stage: `
+        <span class="rb-menu-wrap">
+          <button class="btn outline" data-rb-menu="#ds-menu-1">Acciones ▾</button>
+          <div class="rb-menu" id="ds-menu-1">
+            <div class="rb-menu-label">Proyecto</div>
+            <button>Editar</button>
+            <button>Duplicar</button>
+            <button aria-disabled="true">Archivar</button>
+            <hr />
+            <button class="danger">Eliminar</button>
+          </div>
+        </span>
+        <span class="rb-menu-wrap">
+          <button class="btn ghost icon" data-rb-menu="#ds-menu-2" aria-label="Más opciones">⋯</button>
+          <div class="rb-menu align-end" id="ds-menu-2">
+            <button>Ver detalles</button>
+            <button>Compartir enlace</button>
+          </div>
+        </span>
+      `,
+      code: `<span class="tk-k">&lt;span</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-menu-wrap"</span><span class="tk-k">&gt;</span>
+  <span class="tk-k">&lt;button</span> <span class="tk-a">class</span>=<span class="tk-s">"btn outline"</span> <span class="tk-a">data-rb-menu</span>=<span class="tk-s">"#menu-1"</span><span class="tk-k">&gt;</span>Acciones<span class="tk-k">&lt;/button&gt;</span>
+  <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-menu"</span> <span class="tk-a">id</span>=<span class="tk-s">"menu-1"</span><span class="tk-k">&gt;</span>
+    <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-menu-label"</span><span class="tk-k">&gt;</span>Proyecto<span class="tk-k">&lt;/div&gt;</span>
+    <span class="tk-k">&lt;button&gt;</span>Editar<span class="tk-k">&lt;/button&gt;</span>
+    <span class="tk-k">&lt;button</span> <span class="tk-a">aria-disabled</span>=<span class="tk-s">"true"</span><span class="tk-k">&gt;</span>Archivar<span class="tk-k">&lt;/button&gt;</span>
+    <span class="tk-k">&lt;hr /&gt;</span>
+    <span class="tk-k">&lt;button</span> <span class="tk-a">class</span>=<span class="tk-s">"danger"</span><span class="tk-k">&gt;</span>Eliminar<span class="tk-k">&lt;/button&gt;</span>
+  <span class="tk-k">&lt;/div&gt;</span>
+<span class="tk-k">&lt;/span&gt;</span>
+
+<span class="tk-c">/* roles, aria-expanded y teclado los aplica rumbo-ui.js */</span>`,
+    })}
+
+    <h3 class="sub">Popover</h3>
+    ${RB.demo({
+      stage: `
+        <span class="rb-menu-wrap">
+          <button class="btn secondary" data-rb-popover="#ds-pop-1">¿Qué incluye?</button>
+          <div class="rb-popover" id="ds-pop-1">
+            <h6>Alcance del plan</h6>
+            <p>Proyectos ilimitados, colaboración en tiempo real y export de tokens a Tailwind. El almacenamiento se factura aparte.</p>
+          </div>
+        </span>
+      `,
+      code: `<span class="tk-k">&lt;button</span> <span class="tk-a">data-rb-popover</span>=<span class="tk-s">"#pop-1"</span><span class="tk-k">&gt;</span>¿Qué incluye?<span class="tk-k">&lt;/button&gt;</span>
+<span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-popover"</span> <span class="tk-a">id</span>=<span class="tk-s">"pop-1"</span><span class="tk-k">&gt;</span>…<span class="tk-k">&lt;/div&gt;</span>
+
+<span class="tk-c">/* A diferencia del modal, el popover NO atrapa el foco. */</span>`,
+    })}
+  </section>
+`;
+
+/* ============ DRAWER (RF-12) ============ */
+RB.pages.drawer = (route) => `
+  <section class="page is-visible">
+    ${RB.sectionHeader(route, "Panel lateral para filtros, detalles y formularios secundarios. Comparte el contrato de accesibilidad del modal: foco atrapado, Esc cierra, el foco vuelve al disparador. Úsalo cuando el contexto de fondo importa; si la decisión es puntual, usa un modal.")}
+
+    ${RB.demo({
+      stage: `
+        <button class="btn" data-rb-drawer="#ds-drawer">Abrir panel de filtros</button>
+        <button class="btn secondary" onclick="RumboUI.openDrawer('#ds-drawer-left')">Abrir desde la izquierda</button>
+      `,
+      code: `<span class="tk-k">&lt;button</span> <span class="tk-a">data-rb-drawer</span>=<span class="tk-s">"#panel"</span><span class="tk-k">&gt;</span>Filtros<span class="tk-k">&lt;/button&gt;</span>
+
+<span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-drawer"</span> <span class="tk-a">id</span>=<span class="tk-s">"panel"</span><span class="tk-k">&gt;</span>
+  <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-drawer-scrim"</span><span class="tk-k">&gt;&lt;/div&gt;</span>
+  <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-drawer-panel"</span><span class="tk-k">&gt;</span>
+    <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"rb-drawer-head"</span><span class="tk-k">&gt;</span>
+      <span class="tk-k">&lt;h5&gt;</span>Filtros<span class="tk-k">&lt;/h5&gt;</span>
+      <span class="tk-k">&lt;button</span> <span class="tk-a">data-rb-close</span> <span class="tk-a">aria-label</span>=<span class="tk-s">"Cerrar"</span><span class="tk-k">&gt;</span>×<span class="tk-k">&lt;/button&gt;</span>
+    <span class="tk-k">&lt;/div&gt;</span>
+    …
+  <span class="tk-k">&lt;/div&gt;</span>
+<span class="tk-k">&lt;/div&gt;</span>
+
+<span class="tk-c">// También por API: RumboUI.openDrawer('#panel')</span>
+<span class="tk-c">// Variante izquierda: &lt;div class="rb-drawer left"&gt;</span>`,
+    })}
+
+    <div class="rb-drawer" id="ds-drawer" aria-labelledby="ds-drawer-t">
+      <div class="rb-drawer-scrim"></div>
+      <div class="rb-drawer-panel">
+        <div class="rb-drawer-head">
+          <h5 id="ds-drawer-t">Filtros</h5>
+          <button class="btn ghost icon" data-rb-close aria-label="Cerrar panel">${RB.ic("x", 16)}</button>
+        </div>
+        <div class="field" style="max-width:none;margin-bottom:16px">
+          <label>Estado</label>
+          <select class="input select"><option>Todos</option><option>Activo</option><option>Pausado</option></select>
+        </div>
+        <div class="field" style="max-width:none;margin-bottom:16px">
+          <label>Cliente</label>
+          <input class="input" placeholder="Buscar cliente…" />
+        </div>
+        <label class="switch" style="margin-bottom:20px"><input type="checkbox" checked><span class="track"></span><span>Solo mis proyectos</span></label>
+        <button class="btn" style="width:100%" data-rb-close>Aplicar filtros</button>
+      </div>
+    </div>
+
+    <div class="rb-drawer left" id="ds-drawer-left" aria-labelledby="ds-drawer-lt">
+      <div class="rb-drawer-scrim"></div>
+      <div class="rb-drawer-panel">
+        <div class="rb-drawer-head">
+          <h5 id="ds-drawer-lt">Navegación</h5>
+          <button class="btn ghost icon" data-rb-close aria-label="Cerrar panel">${RB.ic("x", 16)}</button>
+        </div>
+        <p style="font-size:13px">Variante <code>.left</code> — útil como menú en móvil.</p>
+      </div>
+    </div>
   </section>
 `;

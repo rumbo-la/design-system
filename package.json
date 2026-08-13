@@ -1,0 +1,24 @@
+{
+  "name": "@rumbo/design-system",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Design system de Rumbo — tokens, componentes y documentación viva",
+  "type": "module",
+  "files": ["dist", "tokens", "assets"],
+  "exports": {
+    "./tokens.css": "./dist/rumbo.css",
+    "./ui.css": "./dist/rumbo-ui.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./ui.js": "./dist/rumbo-ui.js",
+    "./tokens.json": "./tokens/tokens.json",
+    "./tailwind": "./dist/tailwind.preset.js"
+  },
+  "scripts": {
+    "build": "npm run build:tokens && npm run build:icons",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "build:icons": "node scripts/build-icons.mjs",
+    "check": "node scripts/check-consistency.mjs",
+    "dev": "python3 -m http.server 8471"
+  },
+  "license": "UNLICENSED"
+}

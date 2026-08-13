@@ -141,9 +141,9 @@ RB.pages.home = () => `
       </div>
 
       <div class="stat-grid">
-        <div class="stat"><div class="n">54</div><div class="l">Tokens</div></div>
-        <div class="stat"><div class="n">20</div><div class="l">Componentes</div></div>
-        <div class="stat"><div class="n">28</div><div class="l">Íconos</div></div>
+        <div class="stat"><div class="n">${RB.stats.tokens}</div><div class="l">Tokens</div></div>
+        <div class="stat"><div class="n">${RB.stats.components}</div><div class="l">Componentes</div></div>
+        <div class="stat"><div class="n" id="stat-icons">—</div><div class="l">Íconos</div></div>
         <div class="stat"><div class="n">2</div><div class="l">Temas</div></div>
       </div>
     </div>
@@ -159,7 +159,7 @@ RB.pages.home = () => `
         ["radius","Radius","De técnico (0px) a orgánico (full)"],
         ["shadow","Elevation","Sombras y capas para separar contenido"],
         ["motion","Motion","Duraciones y easings consistentes"],
-        ["iconography","Iconography","28 íconos outline ilustrativos"],
+        ["iconography","Iconography","Set outline ilustrativo, generado desde la hoja"],
         ["logo","Logo","Símbolo, wordmark y usos permitidos"],
       ].map(([r,t,d]) => `
         <a class="dsCard" href="#/${r}">
@@ -440,30 +440,58 @@ RB.pages.motion = (route) => `
 /* ============ ICONOGRAPHY ============ */
 RB.pages.iconography = (route) => `
   <section class="page is-visible">
-    ${RB.sectionHeader(route, "28 íconos outline dibujados para Rumbo. Line weight consistente (2px a 24px), esquinas redondeadas, misma gestualidad que el símbolo de la marca.")}
-    <div class="icon-gallery">
-      <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)">
-        <span>Icon library · v1</span>
-        <span>28 íconos · outline</span>
-      </div>
-      <img src="${(window.__resources&&window.__resources.iconsSheet)||"assets/icons/icons-sheet.svg?v=2"}" alt="Rumbo icons" style="width:100%"/>
+    ${RB.sectionHeader(route, "Set de íconos outline dibujados para Rumbo. Se generan desde <code>assets/icons/icons-sheet.svg</code> con <code>npm run build:icons</code>: cada uno queda normalizado a una caja de 24×24 y hereda <code>currentColor</code>.")}
+
+    <div id="icon-gallery-live" class="swatch-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+      <p class="lead">Cargando íconos…</p>
     </div>
+
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:32px">
       <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-3)">
-        <div style="font-family:'Space Grotesk';font-weight:600;font-size:14px;margin-bottom:4px">Style</div>
-        <div style="font-size:12px;color:var(--text-muted)">Outline, 2px stroke, 24px base grid</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px">Estilo</div>
+        <div style="font-size:12px;color:var(--text-muted)">Outline · caja normalizada de 24×24</div>
       </div>
       <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-3)">
-        <div style="font-family:'Space Grotesk';font-weight:600;font-size:14px;margin-bottom:4px">Tamaños</div>
-        <div style="font-size:12px;color:var(--text-muted)">16 · 20 · 24 · 32 · 48px</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px">Uso</div>
+        <div style="font-size:12px;color:var(--text-muted)"><code>&lt;svg viewBox="0 0 24 24"&gt;&lt;use href="#rb-icon-NOMBRE"/&gt;&lt;/svg&gt;</code></div>
       </div>
       <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-3)">
-        <div style="font-family:'Space Grotesk';font-weight:600;font-size:14px;margin-bottom:4px">Color</div>
-        <div style="font-size:12px;color:var(--text-muted)">currentColor — hereda del padre</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px">Color</div>
+        <div style="font-size:12px;color:var(--text-muted)">currentColor — hereda del contexto</div>
       </div>
     </div>
   </section>
 `;
+
+/* Carga diferida del sprite + índice generados (RF-06 · RF-13) */
+RB.mountIconGallery = async () => {
+  const host = document.getElementById("icon-gallery-live");
+  if (!host) return;
+  try {
+    if (!document.getElementById("rb-icon-sprite")) {
+      const sprite = await fetch("dist/icons/sprite.svg").then(r => r.text());
+      const holder = document.createElement("div");
+      holder.id = "rb-icon-sprite";
+      holder.style.display = "none";
+      holder.innerHTML = sprite;
+      document.body.appendChild(holder);
+    }
+    const icons = await fetch("dist/icons/index.json").then(r => r.json());
+    host.innerHTML = icons.map(i => `
+      <div class="sw" data-copy="${i.name}" title="Click para copiar el nombre">
+        <div style="display:grid;place-items:center;padding:24px 0;background:var(--bg-subtle)">
+          <svg viewBox="0 0 24 24" style="width:34px;height:34px;color:var(--accent)"><use href="#rb-icon-${i.name}"/></svg>
+        </div>
+        <div class="meta">
+          <div class="n" style="font-size:12px">${i.label}</div>
+          <div class="t">${i.name}</div>
+        </div>
+      </div>
+    `).join("");
+  } catch (e) {
+    host.innerHTML = `<p class="lead">Sirve el proyecto por HTTP (<code>npm run dev</code>) para ver los íconos generados.</p>`;
+  }
+};
 
 /* ============ LOGO ============ */
 RB.pages.logo = (route) => `
