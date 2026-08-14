@@ -469,13 +469,15 @@ RB.pages.alert = (route) => `
     ${RB.demo({
       stage: `
         <div style="display:flex;gap:8px">
-          <button class="btn" onclick="RB.toast('Sesión guardada')">Default</button>
-          <button class="btn secondary" onclick="RB.toast('Enlace copiado al portapapeles')">Con enlace</button>
-          <button class="btn ghost" onclick="RB.toast('Cambios descartados')">Otro</button>
+          <button class="btn" onclick="RumboUI.toast('Sesión guardada')">Default</button>
+          <button class="btn secondary" onclick="RumboUI.toast('Enlace copiado al portapapeles','info')">Con enlace</button>
+          <button class="btn ghost" onclick="RumboUI.toast('No se pudo guardar','danger')">Error</button>
         </div>
       `,
-      code: `<span class="tk-c">// En JS</span>
-RB.<span class="tk-a">toast</span>(<span class="tk-s">'Sesión guardada'</span>);
+      code: `<span class="tk-c">// En JS — variantes: success (default) | info | warn | danger</span>
+RumboUI.<span class="tk-a">toast</span>(<span class="tk-s">'Sesión guardada'</span>);
+RumboUI.<span class="tk-a">toast</span>(<span class="tk-s">'No se pudo guardar'</span>, <span class="tk-s">'danger'</span>);
+RumboUI.<span class="tk-a">toast</span>(<span class="tk-s">'Subiendo…'</span>, { <span class="tk-a">variant</span>: <span class="tk-s">'info'</span>, <span class="tk-a">duration</span>: <span class="tk-s">0</span> }); <span class="tk-c">// persistente</span>
 
 <span class="tk-c">/* Markup del toast (se inyecta al dock) */</span>
 <span class="tk-k">&lt;div</span> <span class="tk-a">class</span>=<span class="tk-s">"toast"</span><span class="tk-k">&gt;</span>

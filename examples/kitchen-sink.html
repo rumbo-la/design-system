@@ -159,7 +159,10 @@
 
   <section>
     <h2>íconos</h2>
-    <p class="lead">26 íconos generados por <code>scripts/build-icons.mjs</code>, referenciados desde el sprite y heredando <code>currentColor</code>.</p>
+    <p class="lead">Dos sets generados por <code>scripts/build-icons.mjs</code>: los de UI que usan los componentes y los ilustrativos de marca. Ambos heredan <code>currentColor</code>.</p>
+    <h3 style="font-size:14px;font-weight:600;margin:0 0 12px">UI · <code>#rb-ui-*</code></h3>
+    <div class="icon-grid" id="icon-grid-ui"></div>
+    <h3 style="font-size:14px;font-weight:600;margin:32px 0 12px">Marca · <code>#rb-icon-*</code></h3>
     <div class="icon-grid" id="icon-grid"></div>
   </section>
 </div>
@@ -209,6 +212,11 @@
   }
 
   // Galería de íconos desde el índice generado
+  Promise.all([
+    fetch('../dist/icons-ui.svg').then(r => r.text()),
+    fetch('../dist/icons/sprite.svg').then(r => r.text()),
+  ]).then(([uiSprite]) => document.body.insertAdjacentHTML('afterbegin', uiSprite));
+
   fetch('../dist/icons/index.json')
     .then(r => r.json())
     .then(async (icons) => {
@@ -218,6 +226,16 @@
         `<div class="icon-cell"><svg viewBox="${i.viewBox}"><use href="#rb-icon-${i.name}"/></svg><code>${i.name}</code></div>`
       ).join('');
     })
+  fetch('../dist/icons-ui.json')
+    .then(r => r.json())
+    .then(ui => {
+      document.getElementById('icon-grid-ui').innerHTML = ui.map(i =>
+        `<div class="icon-cell"><svg viewBox="0 0 24 24"><use href="#rb-ui-${i.name}"/></svg><code>${i.name}</code></div>`
+      ).join('');
+    })
+    .catch(() => {});
+
+  Promise.resolve()
     .catch(() => {
       document.getElementById('icon-grid').innerHTML =
         '<p class="lead">Sirve la carpeta por HTTP para ver los íconos (<code>npm run dev</code>).</p>';

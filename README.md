@@ -15,7 +15,7 @@ npm run dev     # sirve el proyecto en http://localhost:8471
 | `tokens/tokens.json` | **Fuente de verdad.** Todo lo demás se genera desde aquí |
 | `dist/` | Artefactos generados — *no editar a mano* |
 | `scripts/` | Build de tokens e íconos, y auditoría de consistencia |
-| `assets/` | Fuentes, logos, hoja de íconos y posts de referencia |
+| `assets/` | Fuentes, logos, íconos fuente (`icons/` marca, `icons-ui/` UI) y posts |
 | `examples/kitchen-sink.html` | Todos los componentes usando solo `dist/` |
 | `Rumbo Design System.html` | Sitio de documentación (35 vistas) |
 | `site/` | Código del sitio de docs: router, datos y páginas (no es parte de la librería) |
@@ -46,13 +46,21 @@ Los componentes **solo** referencian tokens semánticos (`--bg`, `--surface`, `-
 
 ### Íconos
 
-26 íconos normalizados a una caja de 24×24 que heredan `currentColor`:
+Dos sets con propósitos distintos, ambos en caja de 24×24 y heredando `currentColor`:
+
+| Set | Sprite | Prefijo | Para qué |
+|---|---|---|---|
+| **UI** (19) | `dist/icons-ui.svg` | `#rb-ui-*` | Funcionales: los usan botones, alertas, tablas y menús |
+| **Marca** (26) | `dist/icons/sprite.svg` | `#rb-icon-*` | Ilustrativos: servicios y pilares del manual |
 
 ```html
-<svg viewBox="0 0 24 24"><use href="#rb-icon-product"/></svg>
+<svg viewBox="0 0 24 24"><use href="#rb-ui-check"/></svg>     <!-- UI -->
+<svg viewBox="0 0 24 24"><use href="#rb-icon-product"/></svg>  <!-- marca -->
 ```
 
-Carga `dist/icons/sprite.svg` una vez en la página. El catálogo está en `dist/icons/index.json` y en la vista *Iconography* de la documentación.
+Inyecta el sprite que necesites una vez en la página. Catálogos en `dist/icons-ui.json` y `dist/icons/index.json`, y en la vista *Iconography* de la documentación.
+
+Para **añadir un ícono de UI**: deja el SVG en `assets/icons-ui/<nombre>.svg` (24×24, `stroke="currentColor"`) y corre `npm run build:icons`.
 
 ### Componentes con comportamiento
 

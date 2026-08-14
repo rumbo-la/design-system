@@ -440,7 +440,14 @@ RB.pages.motion = (route) => `
 /* ============ ICONOGRAPHY ============ */
 RB.pages.iconography = (route) => `
   <section class="page is-visible">
-    ${RB.sectionHeader(route, "Set de íconos outline dibujados para Rumbo. Se generan desde <code>assets/icons/icons-sheet.svg</code> con <code>npm run build:icons</code>: cada uno queda normalizado a una caja de 24×24 y hereda <code>currentColor</code>.")}
+    ${RB.sectionHeader(route, "Dos sets con propósitos distintos: los <strong>ilustrativos</strong> nombran servicios y valores de marca; los de <strong>UI</strong> son funcionales y los usan los componentes. Ambos se generan con <code>npm run build:icons</code>, viven en una caja de 24×24 y heredan <code>currentColor</code>.")}
+
+    <h3 class="sub">UI · funcionales</h3>
+    <p>Los que usan botones, alertas, tablas y menús. Fuente: <code>assets/icons-ui/*.svg</code> → <code>dist/icons-ui.svg</code>.</p>
+    <div id="icon-gallery-ui" class="swatch-grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))"></div>
+
+    <h3 class="sub" style="margin-top:48px">Ilustrativos · marca</h3>
+    <p>Los de servicios y pilares del manual. Fuente: <code>assets/icons/icons-sheet.svg</code> → <code>dist/icons/</code>.</p>
 
     <div id="icon-gallery-live" class="swatch-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
       <p class="lead">Cargando íconos…</p>
@@ -453,7 +460,7 @@ RB.pages.iconography = (route) => `
       </div>
       <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-3)">
         <div style="font-weight:600;font-size:14px;margin-bottom:4px">Uso</div>
-        <div style="font-size:12px;color:var(--text-muted)"><code>&lt;svg viewBox="0 0 24 24"&gt;&lt;use href="#rb-icon-NOMBRE"/&gt;&lt;/svg&gt;</code></div>
+        <div style="font-size:12px;color:var(--text-muted)"><code>#rb-ui-NOMBRE</code> para UI · <code>#rb-icon-NOMBRE</code> para marca</div>
       </div>
       <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-3)">
         <div style="font-weight:600;font-size:14px;margin-bottom:4px">Color</div>
@@ -476,6 +483,20 @@ RB.mountIconGallery = async () => {
       holder.innerHTML = sprite;
       document.body.appendChild(holder);
     }
+    // Set de UI (el sprite ya lo inyectó ds-app.js al arrancar)
+    const uiHost = document.getElementById("icon-gallery-ui");
+    if (uiHost) {
+      const ui = await fetch("dist/icons-ui.json").then(r => r.json());
+      uiHost.innerHTML = ui.map(i => `
+        <div class="sw" data-copy="${i.name}" title="Click para copiar el nombre">
+          <div style="display:grid;place-items:center;padding:20px 0;background:var(--bg-subtle)">
+            <svg viewBox="0 0 24 24" style="width:26px;height:26px;color:var(--highlight)"><use href="#rb-ui-${i.name}"/></svg>
+          </div>
+          <div class="meta"><div class="t">${i.name}</div></div>
+        </div>
+      `).join("");
+    }
+
     const icons = await fetch("dist/icons/index.json").then(r => r.json());
     host.innerHTML = icons.map(i => `
       <div class="sw" data-copy="${i.name}" title="Click para copiar el nombre">

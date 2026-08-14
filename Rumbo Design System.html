@@ -223,8 +223,6 @@
   .cmdk .res .cat{margin-left:auto;font-family:ui-monospace,monospace;font-size:10px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase}
   .cmdk .res.active,.cmdk .res:hover{background:var(--surface);color:var(--text)}
 
-  /* Toast dock */
-  #toast-dock{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:10px;z-index:200}
 
   /* Hidden copy textarea */
   #copybuf{position:absolute;left:-9999px;top:-9999px}
@@ -252,9 +250,6 @@
 
 <!-- Hidden copy buffer -->
 <textarea id="copybuf" aria-hidden="true" tabindex="-1"></textarea>
-
-<!-- Toast dock -->
-<div id="toast-dock"></div>
 
 <!-- Command menu -->
 <div class="cmdk" id="cmdk" role="dialog" aria-modal="true">

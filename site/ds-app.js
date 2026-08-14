@@ -4,6 +4,21 @@
 
 (function () {
   const wrap = document.getElementById("page-wrap");
+
+  /* ---------- Sprites de íconos ----------
+     El set de UI hace falta desde el primer render (RB.ic lo referencia);
+     el de marca solo en la vista de Iconografía, que lo carga aparte. */
+  fetch("dist/icons-ui.svg")
+    .then(r => r.text())
+    .then(svg => {
+      const holder = document.createElement("div");
+      holder.id = "rb-ui-sprite";
+      holder.style.display = "none";
+      holder.innerHTML = svg;
+      document.body.prepend(holder);
+    })
+    .catch(() => console.warn("No se pudo cargar dist/icons-ui.svg — sirve el proyecto por HTTP"));
+
   const crumb = document.getElementById("crumb-page");
   const sb = document.getElementById("sidebar");
 
@@ -74,23 +89,10 @@
     RB.toast(label + " · " + (text.length > 30 ? text.slice(0, 30) + "…" : text));
   };
 
-  /* ---------- Toast ---------- */
-  const dock = document.getElementById("toast-dock");
-  RB.toast = (msg) => {
-    const el = document.createElement("div");
-    el.className = "toast";
-    el.innerHTML = `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>${msg}</span>`;
-    dock.appendChild(el);
-    requestAnimationFrame(() => {
-      el.style.transform = "translateY(0)";
-      el.style.opacity = "1";
-    });
-    setTimeout(() => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(8px)";
-      setTimeout(() => el.remove(), 300);
-    }, 1800);
-  };
+  /* ---------- Toast ----------
+     Una sola implementación: la de la librería (dist/rumbo-ui.js).
+     RB.toast se mantiene como alias para el código existente del sitio. */
+  RB.toast = (msg, variant) => RumboUI.toast(msg, variant);
 
   /* ---------- Swatch click-to-copy ---------- */
   document.addEventListener("click", (e) => {

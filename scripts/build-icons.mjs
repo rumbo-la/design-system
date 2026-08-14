@@ -3,7 +3,7 @@
    Salida: dist/icons/<nombre>.svg y dist/icons/sprite.svg (trazo en currentColor).
    Los nombres vienen de scripts/icon-names.json (mapa índice → nombre). */
 
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -151,6 +151,39 @@ writeFileSync(
 );
 writeFileSync(resolve(outDir, "index.json"), JSON.stringify(index, null, 2) + "\n");
 
-console.log(`✓ dist/icons/ — ${clusters.length} íconos`);
+console.log(`✓ dist/icons/ — ${clusters.length} íconos de marca`);
 console.log(`  ${index.filter((i) => !i.name.startsWith("icono-")).length} con nombre · ${index.filter((i) => i.name.startsWith("icono-")).length} sin nombrar`);
 console.log(`✓ dist/icons/sprite.svg · dist/icons/index.json`);
+
+/* ---------- 5. Set de UI (trazo) ----------
+   Segundo set, con propósito distinto al ilustrativo de marca: son los
+   íconos funcionales que usan los componentes (check, chevron, gear…).
+   Fuente: assets/icons-ui/*.svg — un archivo por ícono, editable a mano. */
+const uiSrc = resolve(root, "assets/icons-ui");
+const uiFiles = readdirSync(uiSrc).filter((f) => f.endsWith(".svg")).sort();
+const uiSymbols = [];
+const uiIndex = [];
+
+for (const file of uiFiles) {
+  const name = file.replace(/\.svg$/, "");
+  const svg = readFileSync(resolve(uiSrc, file), "utf8");
+  const open = svg.slice(svg.indexOf("<svg"), svg.indexOf(">", svg.indexOf("<svg")) + 1);
+  const inner = svg.slice(svg.indexOf(">", svg.indexOf("<svg")) + 1, svg.lastIndexOf("</svg>")).trim();
+
+  // Los atributos de trazo viajan en el <symbol> para que <use> los herede.
+  const strokeAttrs = [...open.matchAll(/\s(fill|stroke|stroke-width|stroke-linecap|stroke-linejoin)="([^"]*)"/g)]
+    .map(([, k, v]) => `${k}="${v}"`)
+    .join(" ");
+  const viewBox = open.match(/viewBox="([^"]+)"/)?.[1] || "0 0 24 24";
+
+  uiSymbols.push(`  <symbol id="rb-ui-${name}" viewBox="${viewBox}" ${strokeAttrs}>\n    ${inner}\n  </symbol>`);
+  uiIndex.push({ name, viewBox });
+}
+
+writeFileSync(
+  resolve(root, "dist/icons-ui.svg"),
+  `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">\n${uiSymbols.join("\n")}\n</svg>\n`
+);
+writeFileSync(resolve(root, "dist/icons-ui.json"), JSON.stringify(uiIndex, null, 2) + "\n");
+
+console.log(`✓ dist/icons-ui.svg — ${uiIndex.length} íconos de UI`);
