@@ -144,9 +144,6 @@ module.exports = ${JSON.stringify(preset, null, 2)};
 /* ---------- JS para la documentación (RF-13) ----------
    El sitio de docs lee de aquí en lugar de duplicar valores. */
 function buildDocsJs() {
-  const list = (group, prefix) =>
-    entries(group).map(([k, v, d]) => ({ n: k, t: `--${prefix}${k}`, v, role: d }));
-
   const data = {
     brand: entries(tokens.color.brand).map(([k, v, d]) => ({
       n: k, t: `--rb-${k}`, v, role: d,

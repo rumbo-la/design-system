@@ -1,3 +1,10 @@
 node_modules/
 .DS_Store
+
+# Config local del harness (permisos por máquina)
+.claude/
+
+# Scratch de trabajo
 _*.html
+*.tmp
+*.bak
