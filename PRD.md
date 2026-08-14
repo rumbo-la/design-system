@@ -148,7 +148,7 @@ Requisitos para convertir el manual de marca y el design system v1 en un sistema
 
 ## 08 · Apéndice — referencias
 
-- `Rumbo Brand Manual.html` — manual de marca v1.0 (15 capítulos), autoridad de marca.
+- `brand-manual.html` — manual de marca v1.0 (15 capítulos), autoridad de marca.
 - `Rumbo Design System.html` + `site/ds-*.js` — design system v1.0 (33 vistas), autoridad de UI y base del sitio de docs.
 - [Plan de trabajo previo](https://claude.ai/code/artifact/28b8d86f-4be7-4fb5-a1d7-ddcbb85dff10) (base de este PRD) · [Versión web de este PRD](https://claude.ai/code/artifact/1baa602d-3cd2-4f72-9616-dbe9fda4aea6).
 - Formato de tokens: [design-tokens.org](https://design-tokens.org) · Accesibilidad: WCAG 2.1 AA · Patrones de teclado: WAI-ARIA Authoring Practices.

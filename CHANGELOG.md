@@ -38,6 +38,8 @@ Consolidación del manual de marca y el design system en un sistema consumible (
 - **Íconos de UI distribuidos**: los 19 íconos funcionales que usan los componentes salen del sitio de docs y pasan a `assets/icons-ui/*.svg` → `dist/icons-ui.svg`. Antes vivían dentro de `ds-data.js` y no llegaban a quien consumía el sistema.
 
 ### Arquitectura
+- `Rumbo Brand Manual.html` → **`brand-manual.html`** (sin espacios, sin `%20` en las URLs). Se actualizaron las 6 referencias en `index.html`, el sitio de docs, la página de Logo, el script de consistencia, el README y el PRD.
+- `npm run check` valida que los enlaces internos entre documentos existan, para que un renombrado no deje enlaces rotos en silencio.
 - `dist/` pasa a ser **enteramente generado**. Los tres archivos que se escribían a mano (`fonts.css`, `rumbo-ui.css`, `rumbo-ui.js`) viven ahora en `src/` y `build-lib.mjs` los copia. Antes el README decía "no editar `dist/`" pero esos tres eran fuente, lo que invitaba a perder cambios.
 - `npm run check` compara `src/` con `dist/` y falla si alguien editó `dist/` directamente.
 

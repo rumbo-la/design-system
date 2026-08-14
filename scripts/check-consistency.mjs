@@ -31,7 +31,7 @@ if (!css) {
 }
 
 /* ---------- 2. El manual no contradice los valores canónicos ---------- */
-const manual = read("Rumbo Brand Manual.html");
+const manual = read("brand-manual.html");
 if (manual) {
   const canon = {
     ink: tokens.color.brand.ink.$value,
@@ -90,7 +90,20 @@ for (const file of ["fonts.css", "rumbo-ui.css", "rumbo-ui.js"]) {
   }
 }
 
-/* ---------- 5. Íconos generados ---------- */
+/* ---------- 5. Los enlaces internos entre documentos resuelven ----------
+   Detecta enlaces rotos tras renombrar un archivo. */
+for (const file of ["index.html", "Rumbo Design System.html", "site/ds-pages-foundations.js"]) {
+  const html = read(file);
+  if (!html) continue;
+  for (const [, href] of html.matchAll(/href="([^"#:]+\.html)"/g)) {
+    const target = href.startsWith("../") ? href.slice(3) : href;
+    if (!existsSync(resolve(root, target)) && !existsSync(resolve(root, dirname(file), href))) {
+      problems.push(`${file} enlaza a "${href}" que no existe`);
+    }
+  }
+}
+
+/* ---------- 6. Íconos generados ---------- */
 const iconIndex = read("dist/icons/index.json");
 if (!iconIndex) {
   problems.push("dist/icons/index.json no existe — corre `npm run build:icons`");

@@ -544,7 +544,7 @@ RB.pages.logo = (route) => `
       </div>
     </div>
 
-    <p style="margin-top:16px;color:var(--text-muted);font-size:13px">Para construcción detallada y usos prohibidos, consulta el <a href="Rumbo Brand Manual.html" style="color:var(--accent)">manual de marca</a>.</p>
+    <p style="margin-top:16px;color:var(--text-muted);font-size:13px">Para construcción detallada y usos prohibidos, consulta el <a href="brand-manual.html" style="color:var(--accent)">manual de marca</a>.</p>
   </section>
 `;
 

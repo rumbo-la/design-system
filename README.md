@@ -23,7 +23,7 @@ npm run check   # audita consistencia entre manual, docs y tokens
 | `index.html` | Portada — construida con el propio sistema |
 | `Rumbo Design System.html` | Sitio de documentación (35 vistas) |
 | `site/` | Código del sitio de docs: router, datos y páginas (no es parte de la librería) |
-| `Rumbo Brand Manual.html` | Manual de marca (15 capítulos) |
+| `brand-manual.html` | Manual de marca (15 capítulos) |
 | `PRD.md` · `CHANGELOG.md` | Requisitos e historial de versiones |
 | `docs/decisions/` | Actas de decisión (valores canónicos) |
 
