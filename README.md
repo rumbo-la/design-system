@@ -18,6 +18,7 @@ npm run dev     # sirve el proyecto en http://localhost:8471
 | `assets/` | Fuentes, logos, hoja de íconos y posts de referencia |
 | `examples/kitchen-sink.html` | Todos los componentes usando solo `dist/` |
 | `Rumbo Design System.html` | Sitio de documentación (35 vistas) |
+| `site/` | Código del sitio de docs: router, datos y páginas (no es parte de la librería) |
 | `Rumbo Brand Manual.html` | Manual de marca (15 capítulos) |
 | `PRD.md` · `CHANGELOG.md` | Requisitos e historial de versiones |
 | `docs/decisions/` | Actas de decisión (valores canónicos) |

@@ -71,6 +71,10 @@ if (ds) {
   for (const dep of ["dist/rumbo.css", "dist/rumbo-ui.css", "dist/tokens.js"]) {
     if (!ds.includes(dep)) problems.push(`El sitio de docs no carga ${dep} (RF-13)`);
   }
+  // Los scripts del sitio viven en site/ — detecta rutas rotas tras un movimiento
+  for (const dep of ["site/ds-data.js", "site/ds-app.js"]) {
+    if (!ds.includes(dep)) problems.push(`El sitio de docs no carga ${dep}`);
+  }
 }
 
 /* ---------- 4. Íconos generados ---------- */
