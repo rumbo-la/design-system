@@ -21,7 +21,7 @@ npm run check   # audita consistencia entre manual, docs y tokens
 | `assets/` | Fuentes, logos, íconos fuente (`icons/` marca, `icons-ui/` UI) y posts |
 | `examples/kitchen-sink.html` | Todos los componentes usando solo `dist/` |
 | `index.html` | Portada — construida con el propio sistema |
-| `Rumbo Design System.html` | Sitio de documentación (35 vistas) |
+| `design-system.html` | Sitio de documentación (35 vistas) |
 | `site/` | Código del sitio de docs: router, datos y páginas (no es parte de la librería) |
 | `brand-manual.html` | Manual de marca (15 capítulos) |
 | `PRD.md` · `CHANGELOG.md` | Requisitos e historial de versiones |

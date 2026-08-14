@@ -60,7 +60,7 @@ if (manual) {
 }
 
 /* ---------- 3. El sitio de docs no redefine tokens del sistema ---------- */
-const ds = read("Rumbo Design System.html");
+const ds = read("design-system.html");
 if (ds) {
   const localVars = [...ds.matchAll(/^\s*(--[a-z0-9-]+):/gim)].map((m) => m[1]);
   const allowed = new Set(["--sidebar-w", "--max-w"]); // layout propio del sitio
@@ -92,7 +92,7 @@ for (const file of ["fonts.css", "rumbo-ui.css", "rumbo-ui.js"]) {
 
 /* ---------- 5. Los enlaces internos entre documentos resuelven ----------
    Detecta enlaces rotos tras renombrar un archivo. */
-for (const file of ["index.html", "Rumbo Design System.html", "site/ds-pages-foundations.js"]) {
+for (const file of ["index.html", "design-system.html", "site/ds-pages-foundations.js"]) {
   const html = read(file);
   if (!html) continue;
   for (const [, href] of html.matchAll(/href="([^"#:]+\.html)"/g)) {
