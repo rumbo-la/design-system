@@ -14,6 +14,7 @@ module.exports = {
           "blue-300": "#8078F0",
           "cyan": "#47EBEB",
           "cyan-600": "#19B8B8",
+          "cyan-800": "#0B7373",
           "purple": "#8452FD",
           "ink": "#0A0A0B",
           "paper": "#F4F2ED",

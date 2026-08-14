@@ -14,6 +14,7 @@
 | 4 | Naranja `#FF5A36` (DA-01) | Se adopta como **color funcional** (`--danger` / estados de error) y primitivo `--rb-orange`. **No es color de marca**: no aparece en composiciones de marketing ni en el ratio 60/20/10/7/3 | El DS ya lo usa como danger; introducirlo a la paleta de marca contradiría el manual |
 | 5 | Cortes de Dx Grafik (DA-02) | **Black Italic**: display, heros, cifras destacadas y firma editorial. **SemiBold**: titulares largos de documento y piezas donde el italic pierde legibilidad (> 2 líneas) | Propuesta del plan; el manual declara ambos cortes oficiales pero el DS solo usaba Black Italic |
 | 6 | Escalas tipográficas | Dos contextos en los mismos tokens: **marketing** (Display 96 · H1 56 · H2 36 · Body L 20 · Body 16 · Caption 11, del manual) y **producto** (base 14, `xs`→`6xl`, del DS) | Ambos usos son legítimos; la ambigüedad venía de no nombrar el contexto |
+| 7 | Cyan como texto en tema light | Nuevo primitivo **`cyan-800 #0B7373`**; el tema light redefine `--highlight` a ese valor | El cyan de marca `#47EBEB` sobre paper da **1.31:1** — falla WCAG AA (RNF-01). Ni `cyan-600` alcanza (2.19:1). `cyan-800` da 5.05:1. En dark se mantiene `#47EBEB` (13.52:1). El cyan de marca sigue usándose sin cambios como **fondo** (con ink encima) y sobre superficies oscuras |
 
 ## Consecuencias
 

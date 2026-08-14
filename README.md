@@ -3,10 +3,12 @@
 Tokens, componentes y documentación viva de [rumbo.la](https://rumbo.la). Un solo lenguaje visual para marketing y producto, en dark (primario) y light.
 
 ```bash
+npm run dev     # sirve el proyecto en http://localhost:8471
 npm run build   # regenera dist/ desde tokens/ y assets/
 npm run check   # audita consistencia entre manual, docs y tokens
-npm run dev     # sirve el proyecto en http://localhost:8471
 ```
+
+`npm run dev` abre la portada (`index.html`) con enlaces a las tres superficies. No hace falta `npm install`: el sistema no tiene dependencias. Tiene que servirse por HTTP — con `file://` las galerías de íconos fallan por CORS.
 
 ## Qué hay aquí
 
@@ -17,6 +19,7 @@ npm run dev     # sirve el proyecto en http://localhost:8471
 | `scripts/` | Build de tokens e íconos, y auditoría de consistencia |
 | `assets/` | Fuentes, logos, íconos fuente (`icons/` marca, `icons-ui/` UI) y posts |
 | `examples/kitchen-sink.html` | Todos los componentes usando solo `dist/` |
+| `index.html` | Portada — construida con el propio sistema |
 | `Rumbo Design System.html` | Sitio de documentación (35 vistas) |
 | `site/` | Código del sitio de docs: router, datos y páginas (no es parte de la librería) |
 | `Rumbo Brand Manual.html` | Manual de marca (15 capítulos) |

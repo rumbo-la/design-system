@@ -34,6 +34,12 @@ window.RB_TOKENS = {
       "v": "#19B8B8"
     },
     {
+      "n": "cyan-800",
+      "t": "--rb-cyan-800",
+      "v": "#0B7373",
+      "role": "Cyan legible como texto sobre paper — 5.05:1 (acta #7)"
+    },
+    {
       "n": "purple",
       "t": "--rb-purple",
       "v": "#8452FD",
@@ -207,6 +213,11 @@ window.RB_TOKENS = {
       "n": "accent-soft",
       "t": "--accent-soft",
       "v": "rgba(56,46,220,.10)"
+    },
+    {
+      "n": "highlight",
+      "t": "--highlight",
+      "v": "#0B7373"
     }
   ],
   "spacing": [

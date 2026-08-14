@@ -11,6 +11,7 @@
   --rb-blue-300: #8078F0;
   --rb-cyan: #47EBEB; /* Beacon cyan · highlight */
   --rb-cyan-600: #19B8B8;
+  --rb-cyan-800: #0B7373; /* Cyan legible como texto sobre paper — 5.05:1 (acta #7) */
   --rb-purple: #8452FD; /* Journey purple · depth (RGB 132·82·253) */
   --rb-ink: #0A0A0B; /* Anchor · canónico (acta #1) */
   --rb-paper: #F4F2ED; /* Respiro cálido · canónico (acta #2) */
@@ -120,6 +121,7 @@
   --text-muted: rgba(10,10,11,.64);
   --text-dim: rgba(10,10,11,.44);
   --accent-soft: rgba(56,46,220,.10);
+  --highlight: #0B7373;
   --shadow-1: 0 1px 2px rgba(10,10,11,.08);
   --shadow-2: 0 4px 12px rgba(10,10,11,.10);
   --shadow-3: 0 12px 32px rgba(10,10,11,.14), 0 2px 6px rgba(10,10,11,.06);

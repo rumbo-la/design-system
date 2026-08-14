@@ -101,7 +101,8 @@
 .badge.success{background:rgba(60,203,127,.14);color:#3CCB7F;border-color:rgba(60,203,127,.3)}
 .badge.warn{background:rgba(255,176,32,.14);color:#FFB020;border-color:rgba(255,176,32,.3)}
 .badge.danger{background:rgba(255,90,54,.14);color:#FF5A36;border-color:rgba(255,90,54,.3)}
-.badge.cyan{background:rgba(71,235,235,.14);color:var(--rb-cyan);border-color:rgba(71,235,235,.3)}
+.badge.cyan{background:rgba(71,235,235,.14);color:var(--highlight);border-color:rgba(71,235,235,.3)}
+[data-theme="light"] .badge.cyan{background:rgba(11,115,115,.10);border-color:rgba(11,115,115,.28)}
 
 /* Tabs */
 .tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);padding-bottom:0}

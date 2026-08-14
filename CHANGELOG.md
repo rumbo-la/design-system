@@ -31,6 +31,7 @@ Consolidación del manual de marca y el design system en un sistema consumible (
 - **Paper** canónico `#F4F2ED` (el manual declaraba `#FFFFFF`); `#FFFFFF` queda como `--rb-white`.
 - **Purple**: RGB corregido a `132 · 82 · 253` (el manual decía 137).
 - Conteo de íconos: el sistema declaraba 28; son **26**.
+- **Contraste del cyan en tema light**: `--highlight` valía `#47EBEB` en ambos temas, dando 1.31:1 sobre paper (falla AA). El tema light ahora usa el nuevo primitivo `cyan-800 #0B7373` (5.05:1). Afectaba a `.badge.cyan` y a cualquier texto con `--highlight`.
 
 ### Consolidado
 - **Un solo toast**: se elimina la implementación duplicada del sitio de docs; `RB.toast` queda como alias de `RumboUI.toast`. La documentación ahora muestra la API real (con variantes y duración) en vez de una que los consumidores no tienen.
