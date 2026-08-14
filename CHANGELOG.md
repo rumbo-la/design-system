@@ -37,6 +37,10 @@ Consolidación del manual de marca y el design system en un sistema consumible (
 - **Un solo toast**: se elimina la implementación duplicada del sitio de docs; `RB.toast` queda como alias de `RumboUI.toast`. La documentación ahora muestra la API real (con variantes y duración) en vez de una que los consumidores no tienen.
 - **Íconos de UI distribuidos**: los 19 íconos funcionales que usan los componentes salen del sitio de docs y pasan a `assets/icons-ui/*.svg` → `dist/icons-ui.svg`. Antes vivían dentro de `ds-data.js` y no llegaban a quien consumía el sistema.
 
+### Arquitectura
+- `dist/` pasa a ser **enteramente generado**. Los tres archivos que se escribían a mano (`fonts.css`, `rumbo-ui.css`, `rumbo-ui.js`) viven ahora en `src/` y `build-lib.mjs` los copia. Antes el README decía "no editar `dist/`" pero esos tres eran fuente, lo que invitaba a perder cambios.
+- `npm run check` compara `src/` con `dist/` y falla si alguien editó `dist/` directamente.
+
 ### Decisiones
 - El naranja `#FF5A36` es **color funcional** (error), no de marca.
 - Dx Grafik: Black Italic para display y firma; SemiBold para titulares largos.

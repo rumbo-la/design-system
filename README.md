@@ -15,7 +15,8 @@ npm run check   # audita consistencia entre manual, docs y tokens
 | Ruta | Qué es |
 |---|---|
 | `tokens/tokens.json` | **Fuente de verdad.** Todo lo demás se genera desde aquí |
-| `dist/` | Artefactos generados — *no editar a mano* |
+| `src/` | Fuente de la librería escrita a mano: componentes CSS, comportamiento JS y `@font-face` |
+| `dist/` | **Todo generado** — nunca editar a mano (`npm run build` lo reconstruye) |
 | `scripts/` | Build de tokens e íconos, y auditoría de consistencia |
 | `assets/` | Fuentes, logos, íconos fuente (`icons/` marca, `icons-ui/` UI) y posts |
 | `examples/kitchen-sink.html` | Todos los componentes usando solo `dist/` |
@@ -88,7 +89,12 @@ Por atributos, sin escribir JS:
 
 ## Reglas de trabajo
 
-1. **Nunca edites `dist/`.** Cambia `tokens/tokens.json` o los scripts y corre `npm run build`.
+1. **Nunca edites `dist/`.** Es enteramente generado. Según lo que quieras cambiar:
+   - valores de diseño → `tokens/tokens.json`
+   - CSS de componentes o comportamiento → `src/`
+   - íconos → `assets/icons-ui/` o `assets/icons/`
+
+   Luego `npm run build`. Si editas `dist/` por error, `npm run check` lo detecta.
 2. **Un cambio de valor se hace en un solo lugar.** Si necesitas escribir un hex dos veces, falta un token.
 3. **Corre `npm run check` antes de cada release.** Falla si el manual, la documentación y los tokens se contradicen.
 4. **Accesibilidad AA como piso**: foco visible, operable por teclado, `prefers-reduced-motion` respetado.

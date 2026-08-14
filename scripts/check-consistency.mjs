@@ -77,7 +77,20 @@ if (ds) {
   }
 }
 
-/* ---------- 4. Íconos generados ---------- */
+/* ---------- 4. dist/ no fue editado a mano ----------
+   Los archivos de la librería se escriben en src/ y build-lib.mjs los
+   copia. Si difieren, alguien editó dist/ y ese cambio se perderá. */
+for (const file of ["fonts.css", "rumbo-ui.css", "rumbo-ui.js"]) {
+  const a = read(`src/${file}`);
+  const b = read(`dist/${file}`);
+  if (a === null) problems.push(`Falta src/${file}`);
+  else if (b === null) problems.push(`Falta dist/${file} — corre \`npm run build:lib\``);
+  else if (a !== b) {
+    problems.push(`dist/${file} difiere de src/${file} — edita src/ y corre \`npm run build:lib\` (los cambios en dist/ se pierden)`);
+  }
+}
+
+/* ---------- 5. Íconos generados ---------- */
 const iconIndex = read("dist/icons/index.json");
 if (!iconIndex) {
   problems.push("dist/icons/index.json no existe — corre `npm run build:icons`");
