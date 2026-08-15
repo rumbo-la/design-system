@@ -38,6 +38,8 @@ Consolidación del manual de marca y el design system en un sistema consumible (
 - **Íconos de UI distribuidos**: los 19 íconos funcionales que usan los componentes salen del sitio de docs y pasan a `assets/icons-ui/*.svg` → `dist/icons-ui.svg`. Antes vivían dentro de `ds-data.js` y no llegaban a quien consumía el sistema.
 
 ### Arquitectura
+- **`npm run build:site` arma `out/`**, el sitio estático publicable: solo lo que se sirve en runtime más los entregables descargables. Con `.nojekyll` para GitHub Pages y flags `--no-fonts` y `--public` para las dos restricciones conocidas (licencia tipográfica y datos personales del manual).
+- La portada ya no trae cifras por defecto desfasadas: si no puede leer los tokens muestra `—` en vez de un número incorrecto.
 - Documentos renombrados sin espacios (se acaba el `%20` en las URLs):
   - `Rumbo Brand Manual.html` → **`brand-manual.html`**
   - `Rumbo Design System.html` → **`design-system.html`**

@@ -22,8 +22,10 @@
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:icons": "node scripts/build-icons.mjs",
     "build:lib": "node scripts/build-lib.mjs",
+    "build:site": "npm run build && node scripts/build-site.mjs",
     "check": "node scripts/check-consistency.mjs",
-    "dev": "python3 -m http.server 8471"
+    "dev": "python3 -m http.server 8471",
+    "preview": "python3 -m http.server 8472 --directory out"
   },
   "license": "UNLICENSED"
 }

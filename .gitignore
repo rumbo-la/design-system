@@ -8,3 +8,6 @@ node_modules/
 _*.html
 *.tmp
 *.bak
+
+# Sitio estatico generado (npm run build:site)
+out/

@@ -3,9 +3,11 @@
 Tokens, componentes y documentación viva de [rumbo.la](https://rumbo.la). Un solo lenguaje visual para marketing y producto, en dark (primario) y light.
 
 ```bash
-npm run dev     # sirve el proyecto en http://localhost:8471
-npm run build   # regenera dist/ desde tokens/ y assets/
-npm run check   # audita consistencia entre manual, docs y tokens
+npm run dev        # sirve el proyecto en http://localhost:8471
+npm run build      # regenera dist/ desde tokens/ y assets/
+npm run check      # audita consistencia entre manual, docs y tokens
+npm run build:site # arma out/ — el sitio estático publicable
+npm run preview    # sirve out/ en http://localhost:8472
 ```
 
 `npm run dev` abre la portada (`index.html`) con enlaces a las tres superficies. No hace falta `npm install`: el sistema no tiene dependencias. Tiene que servirse por HTTP — con `file://` las galerías de íconos fallan por CORS.
@@ -17,6 +19,7 @@ npm run check   # audita consistencia entre manual, docs y tokens
 | `tokens/tokens.json` | **Fuente de verdad.** Todo lo demás se genera desde aquí |
 | `src/` | Fuente de la librería escrita a mano: componentes CSS, comportamiento JS y `@font-face` |
 | `dist/` | **Todo generado** — nunca editar a mano (`npm run build` lo reconstruye) |
+| `out/` | Sitio estático publicable (`npm run build:site`). No versionado |
 | `scripts/` | Build de tokens e íconos, y auditoría de consistencia |
 | `assets/` | Fuentes, logos, íconos fuente (`icons/` marca, `icons-ui/` UI) y posts |
 | `examples/kitchen-sink.html` | Todos los componentes usando solo `dist/` |
@@ -98,6 +101,24 @@ Por atributos, sin escribir JS:
 2. **Un cambio de valor se hace en un solo lugar.** Si necesitas escribir un hex dos veces, falta un token.
 3. **Corre `npm run check` antes de cada release.** Falla si el manual, la documentación y los tokens se contradicen.
 4. **Accesibilidad AA como piso**: foco visible, operable por teclado, `prefers-reduced-motion` respetado.
+
+## Publicar
+
+`npm run build:site` arma `out/` con lo que se sirve y nada más: los tres documentos, `dist/`, `site/`, las fuentes, los assets del manual y los logos descargables. Quedan fuera `scripts/`, `src/`, `docs/` y los `.md` internos. Incluye un `.nojekyll` para que GitHub Pages sirva los archivos tal cual.
+
+```bash
+npm run build:site              # todo
+npm run build:site -- --no-fonts  # sin tipografías comerciales
+npm run build:site -- --public    # quita del manual el capítulo de firma
+npm run preview                 # comprobar out/ antes de publicar
+```
+
+**Antes de publicar en abierto**, dos cosas que no son técnicas:
+
+1. **Licencia de Dx Grafik.** Es fuente comercial y publicarla la hace descargable por URL. Confirma que la licencia cubre self-hosting web, o usa `--no-fonts`.
+2. **Datos personales.** El capítulo 14 del manual lleva los móviles de los fundadores. Usa `--public` para quitarlo, o publica en un host con acceso restringido.
+
+GitHub Pages sirviendo desde una rama solo admite la raíz o `/docs`, no `/out`. Para publicar `out/` hace falta un workflow de Actions (`actions/upload-pages-artifact`).
 
 ## Compatibilidad
 
