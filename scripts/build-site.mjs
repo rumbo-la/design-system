@@ -68,14 +68,23 @@ if (isPublic) {
   console.log(`  · manual: capítulo de firma eliminado (-${before - html.length} bytes)`);
 }
 
-/* Si se omiten las fuentes, el CSS debe degradar a la pila del sistema
-   en vez de pedir archivos que no existen. */
+/* Si se omiten las fuentes, nada puede seguir pidiéndolas: ni dist/fonts.css
+   ni los @font-face que el manual declara inline en su propio <style>. */
 if (noFonts) {
-  const p = resolve(out, "dist/fonts.css");
-  writeFileSync(p,
+  writeFileSync(resolve(out, "dist/fonts.css"),
 `/* Tipografías omitidas en esta build (--no-fonts).
    Dx Grafik es comercial: confirma la licencia web antes de publicarla.
    El sistema degrada a la pila del sistema operativo. */\n`);
+
+  // El manual no usa dist/fonts.css: trae sus propios @font-face.
+  const manual = resolve(out, "brand-manual.html");
+  if (existsSync(manual)) {
+    let html = readFileSync(manual, "utf8");
+    const antes = (html.match(/@font-face/g) || []).length;
+    html = html.replace(/@font-face\s*\{[^}]*\}/g, "");
+    writeFileSync(manual, html);
+    console.log(`  · manual: ${antes} @font-face inline eliminados`);
+  }
   console.log("  · fuentes omitidas — el sitio usa la pila del sistema");
 }
 

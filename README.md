@@ -7,6 +7,7 @@ npm run dev        # sirve el proyecto en http://localhost:8471
 npm run build      # regenera dist/ desde tokens/ y assets/
 npm run check      # audita consistencia entre manual, docs y tokens
 npm run build:site # arma out/ — el sitio estático publicable
+npm run check:site # verifica que out/ sea autosuficiente
 npm run preview    # sirve out/ en http://localhost:8472
 ```
 
@@ -118,7 +119,23 @@ npm run preview                 # comprobar out/ antes de publicar
 1. **Licencia de Dx Grafik.** Es fuente comercial y publicarla la hace descargable por URL. Confirma que la licencia cubre self-hosting web, o usa `--no-fonts`.
 2. **Datos personales.** El capítulo 14 del manual lleva los móviles de los fundadores. Usa `--public` para quitarlo, o publica en un host con acceso restringido.
 
-GitHub Pages sirviendo desde una rama solo admite la raíz o `/docs`, no `/out`. Para publicar `out/` hace falta un workflow de Actions (`actions/upload-pages-artifact`).
+### Pipeline
+
+`.github/workflows/ci.yml` valida en cada PR y despliega cuando `main` queda verde:
+
+| Paso | Qué protege |
+|---|---|
+| `npm run build` | Que los scripts de build funcionen |
+| `git diff --quiet dist/` | Que el `dist/` commiteado esté al día con `tokens/` y `src/` |
+| `npm run check` | Manual ↔ tokens, `src` ↔ `dist`, enlaces internos |
+| `npm run build:site` | Que el sitio se arme |
+| `npm run check:site` | Que `out/` sea autosuficiente (todo `fetch`/`href` resuelve dentro) |
+
+El despliegue usa `actions/deploy-pages` y solo corre desde `main` si la validación pasó. GitHub Pages sirviendo desde una rama solo admite la raíz o `/docs`, no `/out`: por eso se publica como artefacto vía Actions.
+
+**Variante publicada.** El workflow trae `SITE_FLAGS: "--no-fonts --public"` — la opción segura, que omite Dx Grafik y el capítulo de firma. El sitio degrada a la pila tipográfica del sistema: se pierde la personalidad de marca pero nada se rompe. Quita los flags en el `env:` del workflow cuando la licencia esté confirmada y el destino sea privado.
+
+**Para activarlo**: en el repo, *Settings → Pages → Source → GitHub Actions*.
 
 ## Compatibilidad
 

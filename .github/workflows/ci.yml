@@ -1,0 +1,88 @@
+name: Design System
+
+# Valida en cada PR y en cada push. Despliega solo cuando main queda verde.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ds-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Cómo se arma el sitio publicado. Dos restricciones abiertas del PRD:
+  #
+  #   --no-fonts  Dx Grafik es una tipografía comercial y publicarla la deja
+  #               descargable por URL. Quita este flag cuando esté confirmada
+  #               la licencia de uso web (PRD · riesgo alto).
+  #   --public    El capítulo 14 del manual lleva los móviles personales de
+  #               los fundadores. Quita este flag solo si el sitio se publica
+  #               en un destino con acceso restringido.
+  #
+  # Por defecto se publica la variante segura.
+  SITE_FLAGS: "--no-fonts --public"
+
+jobs:
+  validate:
+    name: Validar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          # Sin dependencias: no hay npm ci ni caché que valga la pena.
+
+      - name: Reconstruir dist/ desde las fuentes
+        run: npm run build
+
+      - name: dist/ commiteado está al día
+        # dist/ va versionado (distribución copy-in). Si alguien cambia
+        # tokens/ o src/ y no reconstruye, los consumidores reciben algo
+        # distinto de lo que dice la fuente de verdad.
+        run: |
+          if ! git diff --quiet -- dist/; then
+            echo "::error::dist/ está desactualizado. Corre 'npm run build' y commitea el resultado."
+            git diff --stat -- dist/
+            exit 1
+          fi
+          echo "dist/ coincide con tokens/ y src/"
+
+      - name: Auditar consistencia
+        # Manual vs tokens, dist vs src, enlaces internos, íconos.
+        run: npm run check
+
+      - name: Armar el sitio
+        run: npm run build:site -- ${{ env.SITE_FLAGS }}
+
+      - name: out/ es autosuficiente
+        run: npm run check:site
+
+      - name: Publicar out/ como artefacto de Pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    name: Desplegar
+    # Solo si la validación pasó y solo desde main.
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Desplegar en GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
